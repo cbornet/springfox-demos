@@ -1,5 +1,6 @@
 package springfoxdemo.boot.swagger.web;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,10 @@ import static com.google.common.collect.Maps.*;
 
 @RestController
 public class CategoryController {
+
+  @Value("${server.port:8080}")
+  int port;
+
   @RequestMapping(value = "/category/Resource", method = RequestMethod.GET)
   public ResponseEntity<String> search(@RequestParam(value = "someEnum") Category someEnum) {
     return ResponseEntity.ok(someEnum.name());
@@ -39,5 +44,10 @@ public class CategoryController {
   @RequestMapping(value = "/category/{id}/map", method = RequestMethod.POST)
   public ResponseEntity<Void> map(@PathVariable String id, @RequestParam Map<String, String> test) {
     return ResponseEntity.ok(null);
+  }
+
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  public ResponseEntity<String> test() {
+    return ResponseEntity.ok("" + port);
   }
 }
